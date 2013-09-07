@@ -1,0 +1,10 @@
+- name: Install elasticsearch kibana
+  hosts: es
+  user: root
+  roles:
+    - tools
+    - nginx
+    - es
+    - td-agent
+    - kibana
+    - restart

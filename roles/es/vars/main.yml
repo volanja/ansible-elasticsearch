@@ -1,0 +1,7 @@
+---
+es: elasticsearch-0.90.3
+src_dir: /usr/local/src
+es_url: https://download.elasticsearch.org/elasticsearch/elasticsearch
+es_rpm: elasticsearch-0.90.3.noarch.rpm
+es_conf: /etc/elasticsearch
+es_port: 9200

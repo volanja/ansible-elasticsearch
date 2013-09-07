@@ -1,0 +1,23 @@
+---
+- name: Copy nginx.repo
+  template: src=nginx.repo dest=/etc/yum.repos.d/nginx.repo mode=0644
+
+- name: install by yum
+  yum: pkg={{ item }} state=installed
+  with_items:
+    - nginx
+
+- name: ensure nginx is running automatically at boot time
+  action: command /sbin/chkconfig nginx on
+
+- name: insert iptables rule
+  lineinfile: dest=/etc/sysconfig/iptables state=present regexp="{{ www_port }}"
+              insertafter="^:OUTPUT " line="-A INPUT -p tcp --dport {{ www_port }} -j ACCEPT"
+  notify: restart iptables
+
+- name: Delete default.conf
+  file: path={{ nginx_conf }}/conf.d/default.conf state=absent
+
+- name: Copy config
+  template: src=nginx.conf dest={{ nginx_conf }}/conf.d/es.conf mode=0644 backup=yes
+  notify: restart nginx
