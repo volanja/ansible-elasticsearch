@@ -1,0 +1,23 @@
+---
+- name: install java
+  yum: pkg={{ item }} state=installed
+  with_items:
+    - java-1.7.0-openjdk
+
+- name: download es
+  action: get_url url={{ es_url }}/{{ es_rpm }} dest={{ src_dir }}/{{ es_rpm }} mode=0644
+
+- name: install es by yum
+  yum: name={{ src_dir }}/{{ es_rpm }} state=installed
+
+- name: ensure elasticsearch is running automatically at boot time
+  action: command /sbin/chkconfig elasticsearch on
+
+- name: Copy es-config
+  template: src=elasticsearch.yml dest=/etc/elasticsearch/elasticsearch.yml mode=0644
+  notify: restart es
+
+- name: insert iptables rule
+  lineinfile: dest=/etc/sysconfig/iptables state=present regexp="{{ es_port }}"
+              insertafter="^:OUTPUT " line="-A INPUT -p tcp --dport {{ es_port }} -j ACCEPT"
+  notify: restart iptables

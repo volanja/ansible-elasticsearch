@@ -1,0 +1,23 @@
+---
+- name: Copy td.repo
+  template: src=td.repo dest=/etc/yum.repos.d/td.repo mode=0644
+
+- name: install by yum
+  yum: pkg={{ item }} state=installed
+  with_items:
+    - td-agent
+
+- name: ensure td-agent is running automatically at boot time
+  action: command /sbin/chkconfig td-agent on
+
+- name: install fluent-plugin-elasticsearch by gem
+  command: /usr/lib64/fluent/ruby/bin/fluent-gem install fluent-plugin-elasticsearch
+
+- name: Copy td-agent.conf
+  template: src=td-agent.conf dest=/etc/td-agent/td-agent.conf mode=0644 backup=yes
+  notify: restart td-agent
+
+- name: chmod target dir
+  command: chmod 755 /var/log/nginx
+- name: chmod target log(dummy)
+  command: chmod 655 /var/log/nginx/access.log

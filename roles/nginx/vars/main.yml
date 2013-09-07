@@ -1,0 +1,3 @@
+---
+www_port: 80
+nginx_conf: /etc/nginx
