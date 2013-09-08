@@ -20,7 +20,9 @@ serverspec (0.7.12)
 
 インストールするもの
 ------
-+ elasticsearch
++ elasticsearch  
+ - plugin bigdesk  
+ - plugin head  
 + kibana3
 + fluentd
 + nginx
@@ -59,6 +61,14 @@ spec/default をspec/xxx.xxx.xxx.xxxと変更してください。
 画面上部に次のエラーがでますが、elasticsearch上にデータがないとでるようです。  
     Error Could not find http://192.168.0.109:9200/_all/_mapping. If you are using a proxy, ensure it is configured correctly
 
+9. elasticsearchのプラグインbigdeskへのアクセス  
+次のURLでアクセスできます。  
+　　http://IPアドレス:9200/_plugin/bigdesk  
+
+10. elasticsearchのプラグインheadへのアクセス  
+次のURLでアクセスできます。  
+　　http://IPアドレス:9200/_plugin/head  
+
 注意点
 -----
 1. サーバホスト名のハードコード  
@@ -77,3 +87,12 @@ spec/default をspec/xxx.xxx.xxx.xxxと変更してください。
 初期設定では、fluentdのログ収集先は/var/log/nginx/access.logにしています。  
 つまり、構築後にkibanaに何度かアクセスすると、elascticsearchにログが保存されます。  
 動作確認用なので、早めに設定を変えてください。  
+
+リンク
+-----
++ [elasticsearch](http://www.elasticsearch.org/)
+ - plugin [bigdesk](https://github.com/lukas-vlcek/bigdesk/)
+ - plugin [head](http://mobz.github.io/elasticsearch-head/)
++ [kibana3](http://three.kibana.org/)
++ [fluentd](http://fluentd.org/)
++ [nginx](http://nginx.org/ja/)
