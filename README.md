@@ -3,7 +3,7 @@ ansible-elasticsearch
 
 ansibleを使って、ログデータの収集と全文検索可能なマシンを構築します。  
 以下のソフトウェアをインストールします。  
-elasticsearch…ログデータのリアルタイム全文検索・分析エンジン  cool. bonsai cool
+elasticsearch…ログデータのリアルタイム全文検索・分析エンジン  cool. bonsai cool  
 kibana3…ログの可視化ソフトウェア  
 fluentd…ログデータの収集ソフトウェア  
 
@@ -47,7 +47,9 @@ clone後、hostsファイル内の対象サーバのIPアドレスを変更し�
 
 4. ansible playbook 実行  
 次のコマンドで実行します。  
+
 	$ ansible-playbook setup.yml -i hosts  
+
 たまにyumで失敗することがありますが再度実行するとうまくいくことがあります。
 
 5. テストの準備  
@@ -56,6 +58,7 @@ spec/default をspec/xxx.xxx.xxx.xxxと変更してください。
 
 6. テストの実行  
 次のコマンドで実行します。  
+
 	$ rake spec
 
 7. 再起動  
@@ -63,17 +66,22 @@ spec/default をspec/xxx.xxx.xxx.xxxと変更してください。
 
 8. kibana3へのアクセス  
 次のURLでアクセスできます。  
+
 	http://IPアドレス/  
+
 画面上部に次のエラーがでますが、elasticsearch上にデータがないとでるようです。  
+
 	Error Could not find http://192.168.0.109:9200/_all/_mapping. If you are using a proxy, ensure it is configured correctly
 
 9. elasticsearchのプラグインbigdeskへのアクセス  
 次のURLでアクセスできます。  
-　　http://IPアドレス:9200/_plugin/bigdesk  
+
+	http://IPアドレス:9200/_plugin/bigdesk  
 
 10. elasticsearchのプラグインheadへのアクセス  
 次のURLでアクセスできます。  
-　　http://IPアドレス:9200/_plugin/head  
+	
+	http://IPアドレス:9200/_plugin/head  
 
 注意点
 -----
