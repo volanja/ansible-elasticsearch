@@ -3,6 +3,3 @@
   yum: pkg={{ item }} state=installed
   with_items:
     - vim
-- name: insert hosts
-  lineinfile: dest=/etc/hosts state=present regexp="{{ servername }}"
-              insertafter="^::1 " line="{{ ansible_default_ipv4.address }} {{ servername }}"
