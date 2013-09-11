@@ -21,3 +21,9 @@
   lineinfile: dest=/etc/sysconfig/iptables state=present regexp="{{ es_port }}"
               insertafter="^:OUTPUT " line="-A INPUT -p tcp --dport {{ es_port }} -j ACCEPT"
   notify: restart iptables
+
+- name: Add Plugin elasticsearch-head
+  action: command /usr/share/elasticsearch/bin/plugin -install mobz/elasticsearch-head
+
+- name: Add Plugin elasticsearch-bigdesk
+  action: command /usr/share/elasticsearch/bin/plugin -install lukas-vlcek/bigdesk
