@@ -9,3 +9,7 @@
 
 - name: Copy config
   template: src=config.js dest={{ kibana_dir }}/config.js mode=0644
+
+- name: insert hosts
+  lineinfile: dest=/etc/hosts state=present regexp="{{ servername }}"
+              insertafter="^::1 " line="{{ ansible_default_ipv4.address }} {{ servername }}"

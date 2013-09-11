@@ -1,7 +1,13 @@
 ansible-elasticsearch
 =====================
 
-ansibleを使って、elasticsearch、kibana3、fluentdを構築します。
+ansibleを使って、ログデータの収集と全文検索可能なマシンを構築します。  
+以下のソフトウェアをインストールします。  
+elasticsearch…ログデータのリアルタイム全文検索・分析エンジン  cool. bonsai cool
+kibana3…ログの可視化ソフトウェア  
+fluentd…ログデータの収集ソフトウェア  
+
+ansible...サーバ構成管理ソフトウェア  
 
 対象環境
 -----
@@ -9,14 +15,14 @@ CentOS 6.4 64bit   (virtualbox + vagrantで構築)
 
 実行環境
 -----
-$ ansible --version  
-ansible 1.2.2
+	$ ansible --version  
+	ansible 1.2.2
 
-$ ruby -v  
-ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-darwin11.4.2]
+	$ ruby -v  
+	ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-darwin11.4.2]
 
-$ gem list |grep serverspec  
-serverspec (0.7.12)
+	$ gem list |grep serverspec  
+	serverspec (0.7.12)
 
 インストールするもの
 ------
@@ -39,7 +45,7 @@ clone後、hostsファイル内の対象サーバのIPアドレスを変更し�
 
 4. ansible playbook 実行  
 次のコマンドで実行します。  
-    $ ansible-playbook setup.yml -i hosts  
+	$ ansible-playbook setup.yml -i hosts  
 たまにyumで失敗することがありますが再度実行するとうまくいくことがあります。
 
 5. テストの準備  
@@ -48,16 +54,16 @@ spec/default をspec/xxx.xxx.xxx.xxxと変更してください。
 
 6. テストの実行  
 次のコマンドで実行します。  
-    $ rake spec
+	$ rake spec
 
 7. 再起動  
 ここで一度再起動してください。
 
 8. kibana3へのアクセス  
 次のURLでアクセスできます。  
-　　http://IPアドレス/  
+	http://IPアドレス/  
 画面上部に次のエラーがでますが、elasticsearch上にデータがないとでるようです。  
-    Error Could not find http://192.168.0.109:9200/_all/_mapping. If you are using a proxy, ensure it is configured correctly
+	Error Could not find http://192.168.0.109:9200/_all/_mapping. If you are using a proxy, ensure it is configured correctly
 
 注意点
 -----
@@ -66,12 +72,11 @@ spec/default をspec/xxx.xxx.xxx.xxxと変更してください。
 (ホスト名未設定の場合にkibanaにうまくアクセスが出来ずハマりました。)  
 実際に動かす際には、環境に合わせて変えてください。  
 初期値ではes-serverです。  
-    $ find ./  |xargs grep -n es-server  
-    ./roles/es/templates/elasticsearch.yml:202:    network.bind_host: es-server  
-    ./roles/kibana/templates/config.js:21:         //elasticsearch: 'http://es-server:9200',  
-    ./roles/nginx/templates/nginx.conf:4:          server_name           es-server;  
-    ./roles/td-agent/templates/td-agent.conf:14:   host es-server  
-    ./roles/tools/vars/main.yml:2:                 servername: es-server  
+	$ find ./  |xargs grep -n es-server  
+	./roles/es/templates/elasticsearch.yml:202:    network.bind_host: es-server  
+	./roles/nginx/templates/nginx.conf:4:          server_name           es-server;  
+	./roles/td-agent/templates/td-agent.conf:14:   host es-server  
+	./roles/kibana/vars/main.yml:3:                 servername: es-server  
 
 2. fluntdの収集先  
 初期設定では、fluentdのログ収集先は/var/log/nginx/access.logにしています。  
