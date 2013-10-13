@@ -2,10 +2,16 @@
 - name: install by yum
   yum: pkg={{ item }} state=installed
   with_items:
-    - git
+    - unzip
 
-- name: install kibana
-  git: repo=https://github.com/elasticsearch/kibana.git dest={{ kibana_dir }} update=yes
+- name: Create Dir
+  file: path=/var/www/html state=directory
+
+- name: Download kibana
+  get_url: url=http://download.elasticsearch.org/kibana/kibana/kibana-latest.zip dest=/tmp/ force=yes
+
+- name: Extract kibana
+  shell: unzip /tmp/kibana-latest.zip -d /var/www/html/
 
 - name: Copy config
   template: src=config.js dest={{ kibana_dir }}/config.js mode=0644
