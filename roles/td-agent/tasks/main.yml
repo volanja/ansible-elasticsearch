@@ -6,9 +6,11 @@
   yum: pkg={{ item }} state=installed
   with_items:
     - td-agent
+    - libcurl
+    - libcurl-devel
 
 - name: ensure td-agent is running automatically at boot time
-  action: command /sbin/chkconfig td-agent on
+  command: /sbin/chkconfig td-agent on
 
 - name: install fluent-plugin-elasticsearch by gem
   command: /usr/lib64/fluent/ruby/bin/fluent-gem install fluent-plugin-elasticsearch
