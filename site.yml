@@ -1,4 +1,4 @@
-- name: Install elasticsearch kibana
+- name: Install-Elasticsearch-Kibana
   hosts: es
   user: root
   roles:
