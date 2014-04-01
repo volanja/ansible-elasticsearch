@@ -8,3 +8,7 @@
     - td-agent
     - kibana
     - restart
+  vars:
+    proxy: false
+    proxy_host: example.com
+    proxy_port: 8080

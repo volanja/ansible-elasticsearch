@@ -22,8 +22,18 @@
               insertafter="^:OUTPUT " line="-A INPUT -p tcp --dport {{ es_port }} -j ACCEPT"
   notify: restart iptables
 
-- name: Add Plugin elasticsearch-head
+- name: (NotProxy) Add Plugin elasticsearch-head
   command: /usr/share/elasticsearch/bin/plugin -install mobz/elasticsearch-head
+  when: not proxy
 
-- name: Add Plugin elasticsearch-bigdesk
+- name: (Proxy) Add Plugin elasticsearch-head
+  command: /usr/share/elasticsearch/bin/plugin -DproxyPort={{ proxy_port }} -DproxyHost={{ proxy_host }} -install mobz/elasticsearch-head
+  when: proxy
+
+- name: (NotProxy) Add Plugin elasticsearch-bigdesk
   command: /usr/share/elasticsearch/bin/plugin -install lukas-vlcek/bigdesk
+  when: not proxy
+
+- name: (Proxy) Add Plugin elasticsearch-bigdesk
+  command: /usr/share/elasticsearch/bin/plugin -DproxyPort={{ proxy_port }} -DproxyHost={{ proxy_host }} -install lukas-vlcek/bigdesk
+  when: proxy
