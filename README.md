@@ -11,22 +11,22 @@ ansible...サーバ構成管理ソフトウェア
 
 対象環境
 -----
-CentOS 6.4 64bit   (virtualbox + vagrantで構築)
+CentOS 6.5 64bit   (virtualbox + vagrantで構築)
 
 実行環境
 -----
-	$ ansible --version  
-	ansible 1.2.2
 
-	$ ruby -v  
-	ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-darwin11.4.2]
+```
+$ ansible --version  
+ansible 1.4.1 (1.4.1 7bf799af65) last updated 2013/11/30 14:23:28 (GMT +900)
 
-	$ gem list |grep serverspec  
-	serverspec (0.13.0)
+$ gem list |grep serverspec  
+serverspec (0.13.7)
+```
 
 インストールするもの
 ------
-+ elasticsearch  
++ elasticsearch (1.1.0)
  - plugin bigdesk  
  - plugin head  
 + kibana3
@@ -53,20 +53,17 @@ $ ansible-playbook setup.yml -i hosts
 
 たまにyumで失敗することがありますが再度実行するとうまくいくことがあります。
 
-5. テストの準備  
-Serverspecで行います。  
-spec/default をspec/xxx.xxx.xxx.xxxと変更してください。
-
-6. テストの実行  
+5. テストの実行  
 次のコマンドで実行します。  
+
 ```
-$ rake spec
+$ rake serverspec:Install-Elasticsearch-Kibana
 ```
 
-7. 再起動  
+6. 再起動  
 ここで一度再起動してください。
 
-8. kibana3へのアクセス  
+7. kibana3へのアクセス  
 次のURLでアクセスできます。  
 ```
 http://IPアドレス/  
@@ -77,13 +74,13 @@ http://IPアドレス/
 Error Could not find http://192.168.0.109:9200/_all/_mapping. If you are using a proxy, ensure it is configured correctly
 ```
 
-9. elasticsearchのプラグインbigdeskへのアクセス  
+8. elasticsearchのプラグインbigdeskへのアクセス  
 次のURLでアクセスできます。  
 ```
 http://IPアドレス:9200/_plugin/bigdesk  
 ```
 
-10. elasticsearchのプラグインheadへのアクセス  
+9. elasticsearchのプラグインheadへのアクセス  
 次のURLでアクセスできます。  
 ```	
 http://IPアドレス:9200/_plugin/head  

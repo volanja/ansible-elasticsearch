@@ -5,13 +5,13 @@
     - java-1.7.0-openjdk
 
 - name: download es
-  action: get_url url={{ es_url }}/{{ es_rpm }} dest={{ src_dir }}/{{ es_rpm }} mode=0644
+  get_url: url={{ es_url }}/{{ es_rpm }} dest={{ src_dir }}/{{ es_rpm }} mode=0644
 
 - name: install es by yum
   yum: name={{ src_dir }}/{{ es_rpm }} state=installed
 
 - name: ensure elasticsearch is running automatically at boot time
-  action: command /sbin/chkconfig elasticsearch on
+  command: /sbin/chkconfig elasticsearch on
 
 - name: Copy es-config
   template: src=elasticsearch.yml dest=/etc/elasticsearch/elasticsearch.yml mode=0644
@@ -23,7 +23,7 @@
   notify: restart iptables
 
 - name: Add Plugin elasticsearch-head
-  action: command /usr/share/elasticsearch/bin/plugin -install mobz/elasticsearch-head
+  command: /usr/share/elasticsearch/bin/plugin -install mobz/elasticsearch-head
 
 - name: Add Plugin elasticsearch-bigdesk
-  action: command /usr/share/elasticsearch/bin/plugin -install lukas-vlcek/bigdesk
+  command: /usr/share/elasticsearch/bin/plugin -install lukas-vlcek/bigdesk
