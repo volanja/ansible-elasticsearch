@@ -8,6 +8,7 @@
     - td-agent
     - libcurl
     - libcurl-devel
+    - gcc
 
 - name: ensure td-agent is running automatically at boot time
   command: /sbin/chkconfig td-agent on
